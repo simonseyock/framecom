@@ -1,0 +1,29 @@
+{
+  "name": "framecom",
+  "version": "1.0.0",
+  "description": "Minimal library for common communication tasks between iframes",
+  "keywords": [
+    "iframe",
+    "postMessage"
+  ],
+  "homepage": "https://github.com/simonseyock/framecom",
+  "bugs": {
+    "url": "https://github.com/simonseyock/framecom/issues"
+  },
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": {
+    "name": "Simon Seyock",
+    "email": "simonseyock@gmail.com"
+  },
+  "devDependencies": {
+    "jest": "^26.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/simonseyock/framecom"
+  }
+}
