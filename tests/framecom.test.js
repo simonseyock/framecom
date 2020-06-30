@@ -9,7 +9,7 @@ beforeEach(() => {
   window.document.body.append(iframe);
 
   parentCom = new FrameCom(window, iframe.contentWindow, '*');
-  childCom = new FrameCom(iframe.contentWindow, window, '*');
+  childCom = new FrameCom(iframe.contentWindow, iframe.contentWindow.parent, '*');
 });
 
 afterEach(() => {

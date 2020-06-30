@@ -13,14 +13,16 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "doc": "jsdoc2md index.js"
   },
   "author": {
     "name": "Simon Seyock",
     "email": "simonseyock@gmail.com"
   },
   "devDependencies": {
-    "jest": "^26.1.0"
+    "jest": "^26.1.0",
+    "jsdoc-to-markdown": "^6.0.1"
   },
   "repository": {
     "type": "git",
