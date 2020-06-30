@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Iframe</title>
+    <script src="../index.js"></script>
+</head>
+<body>
+<iframe id="iframe" src="child.html"></iframe>
+<script>
+  const iframe = document.getElementById('iframe');
+  const paperGlider = new PaperGlider(window, iframe.contentWindow);
+  paperGlider.replyOn('life', number => number === 42);
+</script>
+</body>
+
+</html>

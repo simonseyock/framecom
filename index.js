@@ -84,14 +84,12 @@
    * @returns {Function} end will end replying to the action.
    */
   PaperGlider.prototype.replyOn = function (action, callback) {
-    var end = this._listen(function (e) {
+    return this._listen(function (e) {
       if (this._allowed(action, e)) {
-        end();
         var answer = callback.apply(null, e.data.arguments);
         this.send(action, [answer]);
       }
     }.bind(this));
-    return end;
   };
 
   /**

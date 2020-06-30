@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Window open</title>
+    <script src="../index.js"></script>
+</head>
+<body>
+<button id="window">Open Window</button>
+<script>
+    const button = document.getElementById('window');
+    button.addEventListener('click', () => {
+      const child = window.open('child.html');
+      const paperGlider = new PaperGlider(window, child);
+      paperGlider.replyOn('life', number => number === 42);
+    })
+
+</script>
+</body>
+
+</html>

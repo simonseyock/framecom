@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Child</title>
+    <script src="../index.js"></script>
+</head>
+<body>
+<input id="number" type="number" value="42">
+<button id="request">Request</button>
+<script>
+    let other;
+    if (window.parent !== undefined && window.parent !== window) {
+      console.log('this')
+      other = window.parent;
+    } else if (window.opener !== undefined && window.opener !== window) {
+      console.log('that')
+      other = window.opener;
+    } else {
+      throw new Error('No window to attach to is available.');
+    }
+    const paperGlider = new PaperGlider(window, other);
+    const input = document.getElementById('number');
+    const button = document.getElementById('request');
+    button.addEventListener('click', () => {
+      const number = parseFloat(input.value);
+      paperGlider.request('life', [number], answer => {
+        window.alert(`The answer is ${answer}`);
+      })
+    })
+</script>
+</body>
+</html>
