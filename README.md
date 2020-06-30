@@ -41,11 +41,13 @@ Child frame:
     com.request('someaction', [2, 2], result => console.log(result));
 ```
 
+More complete examples can be found in the examples folder. The files `iframe.html` and `window-open.html` can both be opened locally.
+
 Documentation
 -------------
 
 #### new PaperGlider(self, other, ownOrigin, targetOrigin)
-Sets up the communication between two window objects. The origins can be omitted in which case they are set to `'*"`,
+Sets up the communication between two window objects. The origins can be omitted in which case they are set to `'*'`,
   which normally should be avoided.
 
 
