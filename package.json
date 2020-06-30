@@ -1,14 +1,15 @@
 {
-  "name": "framecom",
+  "name": "paperglider",
   "version": "1.0.0",
-  "description": "Minimal library for common communication tasks between iframes",
+  "description": "Minimal library for common communication tasks between different window objects",
   "keywords": [
     "iframe",
+    "window.open",
     "postMessage"
   ],
-  "homepage": "https://github.com/simonseyock/framecom",
+  "homepage": "https://github.com/simonseyock/paperglider",
   "bugs": {
-    "url": "https://github.com/simonseyock/framecom/issues"
+    "url": "https://github.com/simonseyock/paperglider/issues"
   },
   "license": "MIT",
   "main": "index.js",
@@ -26,6 +27,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/simonseyock/framecom"
+    "url": "https://github.com/simonseyock/paperglider"
   }
 }

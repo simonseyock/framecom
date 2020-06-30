@@ -1,16 +1,16 @@
-framecom
+paperglider
 ========
 
-Minimal library for common communication tasks between iframes.
+Minimal library for common communication tasks between different window objects.
 
 Installation
 ------------
 
 ```
-npm install framecom
+npm install paperglider
 ```
 
-The FrameCom class can be included via AMD, commonjs or a script tag.
+The PaperGlider class can be included via AMD, commonjs or a script tag.
 
 Example
 ------
@@ -20,22 +20,22 @@ We assume a main frame with origin `http://main.example.com` and a child frame w
 Main frame:
 
 ```javascript
-    const FrameCom = require('framecom');
+    const PaperGlider = require('paperglider');
     
-    const com = new FrameCom(window, iframe.contentWindow, 'http://main.example.com',
+    const com = new PaperGlider(window, iframe.contentWindow, 'http://main.example.com',
       'http://child.example.com');
 
     com.replyOn('someaction', (a, b) => a === b);
 ```
 
-Now everytime the framecom object in the main frame receives a message with the action `'someaction'` with the proper targetOrigin, it responds by comparing both sent parameters.
+Now everytime the paperglider object in the main frame receives a message with the action `'someaction'` with the proper targetOrigin, it responds by comparing both sent parameters.
 
 Child frame: 
 
 ```javascript
-    const FrameCom = require('framecom');
+    const PaperGlider = require('paperglider');
     
-    const com = new FrameCom(window, window.parent, 'http://child.example.com',
+    const com = new PaperGlider(window, window.parent, 'http://child.example.com',
       'http://main.example.com');
 
     com.request('someaction', [2, 2], result => console.log(result));
@@ -44,7 +44,7 @@ Child frame:
 Documentation
 -------------
 
-#### new FrameCom(self, other, ownOrigin, targetOrigin)
+#### new PaperGlider(self, other, ownOrigin, targetOrigin)
 Sets up the communication between two window objects. The origins can be omitted in which case they are set to `'*"`,
   which normally should be avoided.
 
@@ -56,7 +56,7 @@ Sets up the communication between two window objects. The origins can be omitted
 | ownOrigin | <code>string</code> | 
 | targetOrigin | <code>string</code> | 
 
-<a name="module_{FrameCom}..FrameCom+send"></a>
+<a name="module_{PaperGlider}..PaperGlider+send"></a>
 
 #### frameCom.send(action, args)
 Sends the action and the given arguments to the other window.
@@ -66,7 +66,7 @@ Sends the action and the given arguments to the other window.
 | action | <code>string</code> | identifier |
 | args | <code>Array.&lt;any&gt;</code> | arguments that get passed to the receiving callback. Should not contain functions or DOM elements. |
 
-<a name="module_{FrameCom}..FrameCom+receive"></a>
+<a name="module_{PaperGlider}..PaperGlider+receive"></a>
 
 #### frameCom.receive(action, callback) ⇒ <code>function</code>
 Whenever the window receives the given action, the callback is executed with the sent arguments.
@@ -78,7 +78,7 @@ Whenever the window receives the given action, the callback is executed with the
 
 **Returns**: <code>function</code> - end will end receiving the action.
 
-<a name="module_{FrameCom}..FrameCom+replyOn"></a>
+<a name="module_{PaperGlider}..PaperGlider+replyOn"></a>
 
 #### frameCom.replyOn(action, callback) ⇒ <code>function</code>
 Whenever the window receives the action, send back the data returned by the callback with the same associated action
@@ -91,7 +91,7 @@ identifier.
 
 **Returns**: <code>function</code> - end will end replying to the action.
 
-<a name="module_{FrameCom}..FrameCom+request"></a>
+<a name="module_{PaperGlider}..PaperGlider+request"></a>
 
 #### frameCom.request(action, args, callback)
 Sends the action to the other window and waits for the same action and executes the callback once with the returned data.
@@ -102,7 +102,7 @@ Sends the action to the other window and waits for the same action and executes 
 | args | <code>Array.&lt;any&gt;</code> | arguments that get passed to the receiving callback. Should not contain functions or DOM elements. |
 | callback | <code>function</code> | gets passed the (single) answer to the request. |
 
-<a name="module_{FrameCom}..FrameCom+dispose"></a>
+<a name="module_{PaperGlider}..PaperGlider+dispose"></a>
 
 #### frameCom.dispose()
 Removes all pending event listeners from the window object.  
