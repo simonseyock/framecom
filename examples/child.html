@@ -11,10 +11,8 @@
 <script>
     let other;
     if (window.parent !== undefined && window.parent !== window) {
-      console.log('this')
       other = window.parent;
     } else if (window.opener !== undefined && window.opener !== window) {
-      console.log('that')
       other = window.opener;
     } else {
       throw new Error('No window to attach to is available.');
