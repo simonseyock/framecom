@@ -46,6 +46,25 @@ More complete examples can be found in the examples folder. The files `iframe.ht
 Documentation
 -------------
 
+## paperglider
+A module for communication between window objects.
+
+<a name="module_{PaperGlider}"></a>
+
+## {PaperGlider}
+
+* [{PaperGlider}](#module_{PaperGlider})
+    * [~PaperGlider](#module_{PaperGlider}..PaperGlider)
+        * [new PaperGlider(self, other, ownOrigin, targetOrigin)](#new_module_{PaperGlider}..PaperGlider_new)
+        * [.isConnected()](#module_{PaperGlider}..PaperGlider+isConnected) ⇒ <code>boolean</code>
+        * [.send(action, args)](#module_{PaperGlider}..PaperGlider+send)
+        * [.receive(action, callback)](#module_{PaperGlider}..PaperGlider+receive) ⇒ <code>function</code>
+        * [.replyOn(action, callback)](#module_{PaperGlider}..PaperGlider+replyOn) ⇒ <code>function</code>
+        * [.request(action, args, callback)](#module_{PaperGlider}..PaperGlider+request)
+        * [.dispose()](#module_{PaperGlider}..PaperGlider+dispose)
+
+<a name="module_{PaperGlider}..PaperGlider"></a>
+
 #### new PaperGlider(self, other, ownOrigin, targetOrigin)
 Sets up the communication between two window objects. The origins can be omitted in which case they are set to `'*'`,
   which normally should be avoided.
@@ -58,10 +77,18 @@ Sets up the communication between two window objects. The origins can be omitted
 | ownOrigin | <code>string</code> | 
 | targetOrigin | <code>string</code> | 
 
+<a name="module_{PaperGlider}..PaperGlider+isConnected"></a>
+
+#### paperGlider.isConnected() ⇒ <code>boolean</code>
+Returns true if a connection was established.
+
+**Kind**: instance method of [<code>PaperGlider</code>](#module_{PaperGlider}..PaperGlider)  
 <a name="module_{PaperGlider}..PaperGlider+send"></a>
 
-#### frameCom.send(action, args)
+#### paperGlider.send(action, args)
 Sends the action and the given arguments to the other window.
+
+**Kind**: instance method of [<code>PaperGlider</code>](#module_{PaperGlider}..PaperGlider)  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -70,33 +97,37 @@ Sends the action and the given arguments to the other window.
 
 <a name="module_{PaperGlider}..PaperGlider+receive"></a>
 
-#### frameCom.receive(action, callback) ⇒ <code>function</code>
+#### paperGlider.receive(action, callback) ⇒ <code>function</code>
 Whenever the window receives the given action, the callback is executed with the sent arguments.
+
+**Kind**: instance method of [<code>PaperGlider</code>](#module_{PaperGlider}..PaperGlider)  
+**Returns**: <code>function</code> - end will end receiving the action.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | action | <code>string</code> | identifier |
 | callback | <code>function</code> | will receive all sent arguments as arguments to the call. |
 
-**Returns**: <code>function</code> - end will end receiving the action.
-
 <a name="module_{PaperGlider}..PaperGlider+replyOn"></a>
 
-#### frameCom.replyOn(action, callback) ⇒ <code>function</code>
+#### paperGlider.replyOn(action, callback) ⇒ <code>function</code>
 Whenever the window receives the action, send back the data returned by the callback with the same associated action
 identifier.
+
+**Kind**: instance method of [<code>PaperGlider</code>](#module_{PaperGlider}..PaperGlider)  
+**Returns**: <code>function</code> - end will end replying to the action.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | action | <code>string</code> |  |
 | callback | <code>function</code> | will receive all sent arguments as arguments to the call. |
 
-**Returns**: <code>function</code> - end will end replying to the action.
-
 <a name="module_{PaperGlider}..PaperGlider+request"></a>
 
-#### frameCom.request(action, args, callback)
+#### paperGlider.request(action, args, callback)
 Sends the action to the other window and waits for the same action and executes the callback once with the returned data.
+
+**Kind**: instance method of [<code>PaperGlider</code>](#module_{PaperGlider}..PaperGlider)  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -106,5 +137,7 @@ Sends the action to the other window and waits for the same action and executes 
 
 <a name="module_{PaperGlider}..PaperGlider+dispose"></a>
 
-#### frameCom.dispose()
-Removes all pending event listeners from the window object.  
+#### paperGlider.dispose()
+Removes all pending event listeners from the window object.
+
+**Kind**: instance method of [<code>PaperGlider</code>](#module_{PaperGlider}..PaperGlider)  

@@ -34,6 +34,13 @@
     this._ownOrigin = ownOrigin !== undefined ? ownOrigin : '*';
     this._targetOrigin = targetOrigin !== undefined ? targetOrigin : '*';
     this._listeners = [];
+    this._connected = false;
+    var end = this.receive('paperglider:connect', function () {
+      this._connected = true;
+      this.send('paperglider:connect');
+      end();
+    }.bind(this));
+    this.send('paperglider:connect');
   }
 
   PaperGlider.prototype._allowed = function (action, e) {
@@ -49,10 +56,18 @@
     }.bind(this);
   };
 
+    /**
+     * Returns true if a connection was established.
+     * @returns {boolean}
+     */
+  PaperGlider.prototype.isConnected = function () {
+    return this._connected;
+  };
+
   /**
    * Sends the action and the given arguments to the other window.
    * @param {string} action identifier
-   * @param {any[]} args arguments that get passed to the receiving callback. Should not contain functions or DOM elements.
+   * @param {any[]?} args arguments that get passed to the receiving callback. Should not contain functions or DOM elements.
    */
   PaperGlider.prototype.send = function (action, args) {
     args = args !== undefined ? args : [];

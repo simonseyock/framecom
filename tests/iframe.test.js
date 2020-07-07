@@ -103,3 +103,14 @@ test('replyOn can be ended', done => {
     done();
   }, 200);
 });
+
+test('should connect', done => {
+  expect(childGlider.isConnected()).toBe(false);
+  expect(parentGlider.isConnected()).toBe(false);
+
+  setTimeout(() => {
+    expect(childGlider.isConnected()).toBe(true);
+    expect(parentGlider.isConnected()).toBe(true);
+    done();
+  }, 200)
+});
