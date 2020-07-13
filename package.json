@@ -1,6 +1,6 @@
 {
   "name": "paperglider",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Minimal library for common communication tasks between different window objects",
   "keywords": [
     "iframe",
