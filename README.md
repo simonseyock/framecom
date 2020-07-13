@@ -55,27 +55,50 @@ A module for communication between window objects.
 
 * [{PaperGlider}](#module_{PaperGlider})
     * [~PaperGlider](#module_{PaperGlider}..PaperGlider)
-        * [new PaperGlider(self, other, ownOrigin, targetOrigin)](#new_module_{PaperGlider}..PaperGlider_new)
+        * [new PaperGlider(self, target, [targetOrigin])](#new_module_{PaperGlider}..PaperGlider_new)
+        * _instance_
+            * [.isConnected()](#module_{PaperGlider}..PaperGlider+isConnected) ⇒ <code>boolean</code>
+            * [.send(action, args)](#module_{PaperGlider}..PaperGlider+send)
+            * [.receive(action, callback)](#module_{PaperGlider}..PaperGlider+receive) ⇒ <code>function</code>
+            * [.replyOn(action, callback)](#module_{PaperGlider}..PaperGlider+replyOn) ⇒ <code>function</code>
+            * [.request(action, args, callback)](#module_{PaperGlider}..PaperGlider+request)
+            * [.dispose()](#module_{PaperGlider}..PaperGlider+dispose)
+            * [.onConnect(callback)](#module_{PaperGlider}..PaperGlider+onConnect)
+        * _static_
+            * [.connectChild(child, [childOrigin])](#module_{PaperGlider}..PaperGlider.connectChild) ⇒ <code>PaperGlider</code>
+            * [.connectParent(parent, [parentOrigin])](#module_{PaperGlider}..PaperGlider.connectParent) ⇒ <code>PaperGlider</code>
+
+<a name="module_{PaperGlider}..PaperGlider"></a>
+
+### {PaperGlider}~PaperGlider
+**Kind**: inner class of [<code>{PaperGlider}</code>](#module_{PaperGlider})  
+
+* [~PaperGlider](#module_{PaperGlider}..PaperGlider)
+    * [new PaperGlider(self, target, [targetOrigin])](#new_module_{PaperGlider}..PaperGlider_new)
+    * _instance_
         * [.isConnected()](#module_{PaperGlider}..PaperGlider+isConnected) ⇒ <code>boolean</code>
         * [.send(action, args)](#module_{PaperGlider}..PaperGlider+send)
         * [.receive(action, callback)](#module_{PaperGlider}..PaperGlider+receive) ⇒ <code>function</code>
         * [.replyOn(action, callback)](#module_{PaperGlider}..PaperGlider+replyOn) ⇒ <code>function</code>
         * [.request(action, args, callback)](#module_{PaperGlider}..PaperGlider+request)
         * [.dispose()](#module_{PaperGlider}..PaperGlider+dispose)
+        * [.onConnect(callback)](#module_{PaperGlider}..PaperGlider+onConnect)
+    * _static_
+        * [.connectChild(child, [childOrigin])](#module_{PaperGlider}..PaperGlider.connectChild) ⇒ <code>PaperGlider</code>
+        * [.connectParent(parent, [parentOrigin])](#module_{PaperGlider}..PaperGlider.connectParent) ⇒ <code>PaperGlider</code>
 
-<a name="module_{PaperGlider}..PaperGlider"></a>
+<a name="new_module_{PaperGlider}..PaperGlider_new"></a>
 
-#### new PaperGlider(self, other, ownOrigin, targetOrigin)
-Sets up the communication between two window objects. The origins can be omitted in which case they are set to `'*'`,
+#### new PaperGlider(self, target, [targetOrigin])
+Sets up the communication between two window objects. The target origin can be omitted in which case it is set to `'*'`,
   which normally should be avoided.
 
 
-| Param | Type |
-| --- | --- |
-| self | <code>Window</code> | 
-| other | <code>Window</code> | 
-| ownOrigin | <code>string</code> | 
-| targetOrigin | <code>string</code> | 
+| Param | Type | Default |
+| --- | --- | --- |
+| self | <code>Window</code> |  | 
+| target | <code>Window</code> |  | 
+| [targetOrigin] | <code>string</code> | <code>&quot;&#x27;*&#x27;&quot;</code> | 
 
 <a name="module_{PaperGlider}..PaperGlider+isConnected"></a>
 
@@ -141,3 +164,38 @@ Sends the action to the other window and waits for the same action and executes 
 Removes all pending event listeners from the window object.
 
 **Kind**: instance method of [<code>PaperGlider</code>](#module_{PaperGlider}..PaperGlider)  
+<a name="module_{PaperGlider}..PaperGlider+onConnect"></a>
+
+#### paperGlider.onConnect(callback)
+The given callback will be executed as soon as PaperGlider has connected.
+
+**Kind**: instance method of [<code>PaperGlider</code>](#module_{PaperGlider}..PaperGlider)  
+
+| Param |
+| --- |
+| callback | 
+
+<a name="module_{PaperGlider}..PaperGlider.connectChild"></a>
+
+#### PaperGlider.connectChild(child, [childOrigin]) ⇒ <code>PaperGlider</code>
+This is a simple helper to connect to a child window (iframe, window.open)
+
+**Kind**: static method of [<code>PaperGlider</code>](#module_{PaperGlider}..PaperGlider)  
+
+| Param | Type | Default |
+| --- | --- | --- |
+| child | <code>Window</code> |  | 
+| [childOrigin] | <code>string</code> | <code>&quot;&#x27;*&#x27;&quot;</code> | 
+
+<a name="module_{PaperGlider}..PaperGlider.connectParent"></a>
+
+#### PaperGlider.connectParent(parent, [parentOrigin]) ⇒ <code>PaperGlider</code>
+This is a simple helper to connect to a parent window (window.parent, window.opener)
+
+**Kind**: static method of [<code>PaperGlider</code>](#module_{PaperGlider}..PaperGlider)  
+
+| Param | Type | Default |
+| --- | --- | --- |
+| parent | <code>Window</code> |  | 
+| [parentOrigin] | <code>string</code> | <code>&quot;&#x27;*&#x27;&quot;</code> | 
+

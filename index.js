@@ -20,31 +20,65 @@
    */
   function () {
   /**
-   * Sets up the communication between two window objects. The origins can be omitted in which case they are set to `'*'`,
+   * Sets up the communication between two window objects. The target origin can be omitted in which case it is set to `'*'`,
    *   which normally should be avoided.
    * @param {Window} self
-   * @param {Window} other
-   * @param {string} ownOrigin
-   * @param {string} targetOrigin
+   * @param {Window} target
+   * @param {string} [targetOrigin='*']
    * @constructor
    */
-  function PaperGlider (self, other, ownOrigin, targetOrigin) {
+  function PaperGlider (self, target, targetOrigin) {
     this._self = self;
-    this._other = other;
-    this._ownOrigin = ownOrigin !== undefined ? ownOrigin : '*';
-    this._targetOrigin = targetOrigin !== undefined ? targetOrigin : '*';
+    this._other = target;
+    if (targetOrigin === undefined || targetOrigin === '*') {
+      console.warn('You are using origin \'*\'. This is not recommended.');
+      this._targetOrigin = '*';
+    } else {
+      this._targetOrigin = targetOrigin;
+    }
     this._listeners = [];
     this._connected = false;
+    this._connectCallbacks = [];
+
     var end = this.receive('paperglider:connect', function () {
       this._connected = true;
       this.send('paperglider:connect');
+      this._connectCallbacks.forEach(function (callback) {
+        callback();
+      });
       end();
     }.bind(this));
-    this.send('paperglider:connect');
+
+    try {
+      this.send('paperglider:connect');
+    } catch (e) {
+      console.warn('Connect failed from one end. It can still be established from the other end. This can happen because one end is not fully loaded yet.');
+      console.warn(e);
+    }
   }
 
+    /**
+     * This is a simple helper to connect to a child window (iframe, window.open)
+     * @param {Window} child
+     * @param {string} [childOrigin='*']
+     * @returns {PaperGlider}
+     */
+  PaperGlider.connectChild = function (child, childOrigin) {
+    return new PaperGlider(window, child, childOrigin);
+  };
+
+    /**
+     * This is a simple helper to connect to a parent window (window.parent, window.opener)
+     * @param {Window} parent
+     * @param {string} [parentOrigin='*']
+     * @returns {PaperGlider}
+     */
+  PaperGlider.connectParent = function (parent, parentOrigin) {
+    return new PaperGlider(window, parent, parentOrigin);
+  };
+
   PaperGlider.prototype._allowed = function (action, e) {
-    return (this._ownOrigin === '*' || e.origin === this._ownOrigin) && e.data.action === action;
+    return (this._targetOrigin === '*' || e.origin === this._targetOrigin) && e.data.action === action;
   };
 
   PaperGlider.prototype._listen = function (listener) {
@@ -128,6 +162,18 @@
     this._listeners.forEach(function (listener) {
       this._self.removeEventListener('message', listener, false);
     }.bind(this));
+  };
+
+    /**
+     * The given callback will be executed as soon as PaperGlider has connected.
+     * @param callback
+     */
+  PaperGlider.prototype.onConnect = function (callback) {
+    if (this._connected) {
+      callback();
+    } else {
+      this._connectCallbacks.push(callback);
+    }
   };
 
   return PaperGlider;

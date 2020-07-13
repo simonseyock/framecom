@@ -14,7 +14,9 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "concurrently -s first -k npm:server2 npm:karma",
+    "karma": "karma start --single-run",
+    "server2": "http-server ./ -p 9877",
     "doc": "jsdoc2md index.js"
   },
   "author": {
@@ -22,8 +24,13 @@
     "email": "simonseyock@gmail.com"
   },
   "devDependencies": {
-    "jest": "^26.1.0",
-    "jsdoc-to-markdown": "^6.0.1"
+    "concurrently": "^5.2.0",
+    "http-server": "^0.12.3",
+    "jasmine-core": "^3.5.0",
+    "jsdoc-to-markdown": "^6.0.1",
+    "karma": "^5.1.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-jasmine": "^3.3.1"
   },
   "repository": {
     "type": "git",
