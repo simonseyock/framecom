@@ -20,27 +20,35 @@
    */
   function () {
   /**
-   * Sets up the communication between two window objects. The target origin can be omitted in which case it is set to `'*'`,
-   *   which normally should be avoided.
+   * Creates an object to communicate with another windows.
    * @param {Window} self
-   * @param {Window} target
-   * @param {string} [targetOrigin='*']
    * @constructor
    */
-  function PaperGlider (self, target, targetOrigin) {
+  function PaperGlider (self) {
     this._self = self;
+    this._listeners = [];
+    this._connected = false;
+    this._connectCallbacks = [];
+  }
+
+    /**
+     * Sets up the communication to another window. The target origin can be omitted in which case it is set to `'*'`,
+     *   which normally should be avoided.
+     * @param {Window} target
+     * @param {string} [targetOrigin='*']
+     */
+  PaperGlider.prototype.init = function (target, targetOrigin) {
     this._other = target;
+
     if (targetOrigin === undefined || targetOrigin === '*') {
       console.warn('You are using origin \'*\'. This is not recommended.');
       this._targetOrigin = '*';
     } else {
       this._targetOrigin = targetOrigin;
     }
-    this._listeners = [];
-    this._connected = false;
-    this._connectCallbacks = [];
 
     var end = this.receive('paperglider:connect', function () {
+      console.warn('connect message')
       this._connected = true;
       this.send('paperglider:connect');
       this._connectCallbacks.forEach(function (callback) {
@@ -53,9 +61,31 @@
       this.send('paperglider:connect');
     } catch (e) {
       console.warn('Connect failed from one end. It can still be established from the other end. This can happen because one end is not fully loaded yet.');
-      console.warn(e);
     }
-  }
+  };
+
+    /**
+     * This is a simple helper to connect to a iframe. It waits for the contentWindow if neccessary.
+     * @param {HTMLIFrameElement} iframe
+     * @param {string} [iframeOrigin='*']
+     * @returns {PaperGlider}
+     */
+  PaperGlider.connectIframe = function (iframe, iframeOrigin) {
+    var paperGlider = new PaperGlider(window);
+    if (iframe.contentWindow) {
+      paperGlider.init(iframe.contentWindow, iframeOrigin)
+    } else {
+      console.warn('wait for iframe')
+      var interval = setInterval(function () {
+        console.warn('iframe found')
+        if (iframe.contentWindow) {
+          clearInterval(interval);
+          paperGlider.init(iframe.contentWindow, iframeOrigin);
+        }
+      }, 200);
+    }
+    return paperGlider;
+  };
 
     /**
      * This is a simple helper to connect to a child window (iframe, window.open)
@@ -64,17 +94,27 @@
      * @returns {PaperGlider}
      */
   PaperGlider.connectChild = function (child, childOrigin) {
-    return new PaperGlider(window, child, childOrigin);
+    var paperGlider = new PaperGlider(window);
+    paperGlider.init(child, childOrigin);
+    return paperGlider;
   };
 
     /**
-     * This is a simple helper to connect to a parent window (window.parent, window.opener)
-     * @param {Window} parent
+     * This is a simple helper to connect to a parent window (window.top or window.opener)
      * @param {string} [parentOrigin='*']
      * @returns {PaperGlider}
      */
-  PaperGlider.connectParent = function (parent, parentOrigin) {
-    return new PaperGlider(window, parent, parentOrigin);
+  PaperGlider.connectParent = function (parentOrigin) {
+    var paperGlider = new PaperGlider(window);
+    if (window.opener !== null) {
+      paperGlider.init(window.opener, parentOrigin);
+    } else if (window.top !== null) {
+      paperGlider.init(window.top, parentOrigin);
+    } else {
+      throw new Error('No parent window available');
+    }
+
+    return paperGlider;
   };
 
   PaperGlider.prototype._allowed = function (action, e) {

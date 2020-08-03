@@ -15,7 +15,9 @@
   "main": "index.js",
   "scripts": {
     "test": "concurrently -s first -k npm:server2 npm:karma",
+    "test:debug": "concurrently -s first -k npm:server2 npm:karma:debug",
     "karma": "karma start --single-run",
+    "karma:debug": "karma start --no-single-run",
     "server2": "http-server ./ -p 9877",
     "doc": "jsdoc2md index.js"
   },

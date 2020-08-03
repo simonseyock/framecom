@@ -6,8 +6,9 @@ describe('works with window open', () => {
     window.document.body.innerHTML = '';
     const child = window.open('', 'child')
 
-    parentGlider = new PaperGlider(window, child, '*');
-    childGlider = new PaperGlider(child, child.opener, '*');
+    parentGlider = PaperGlider.connectChild(child);
+    childGlider = new PaperGlider(child);
+    childGlider.init(child.opener);
   });
 
   afterEach(() => {

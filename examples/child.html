@@ -9,15 +9,7 @@
 <input id="number" type="number" value="42">
 <button id="request">Request</button>
 <script>
-    let other;
-    if (window.parent !== undefined && window.parent !== window) {
-      other = window.parent;
-    } else if (window.opener !== undefined && window.opener !== window) {
-      other = window.opener;
-    } else {
-      throw new Error('No window to attach to is available.');
-    }
-    const paperGlider = new PaperGlider(window, other);
+    const paperGlider = PaperGlider.connectParent();
     const input = document.getElementById('number');
     const button = document.getElementById('request');
     button.addEventListener('click', () => {
