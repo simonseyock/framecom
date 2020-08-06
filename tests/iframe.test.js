@@ -4,13 +4,10 @@ describe('works with iframes', () => {
 
   beforeEach(() => {
     const iframe = window.document.createElement('iframe');
-
-    parentGlider = PaperGlider.connectIframe(iframe);
-
     window.document.body.append(iframe);
 
-    childGlider = new PaperGlider(iframe.contentWindow);
-    childGlider.init(iframe.contentWindow.parent);
+    parentGlider = PaperGlider.connect().toWindow(iframe.contentWindow);
+    childGlider = PaperGlider.connect(iframe.contentWindow).toParent();
   });
 
   afterEach(() => {

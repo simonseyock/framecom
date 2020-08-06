@@ -9,7 +9,7 @@
 <input id="number" type="number" value="42">
 <button id="request">Request</button>
 <script>
-    const paperGlider = PaperGlider.connectParent();
+    const paperGlider = PaperGlider.connect().toParent();
     const input = document.getElementById('number');
     const button = document.getElementById('request');
     button.addEventListener('click', () => {

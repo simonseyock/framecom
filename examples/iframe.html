@@ -9,7 +9,7 @@
 <iframe id="iframe" src="child.html"></iframe>
 <script>
   const iframe = document.getElementById('iframe');
-  const paperGlider = PaperGlider.connectIframe(iframe);
+  const paperGlider = PaperGlider.connect().toIframe(iframe);
   paperGlider.replyOn('life', number => number === 42);
 </script>
 </body>

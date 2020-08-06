@@ -8,7 +8,7 @@
 <body>
 iframe
 <script>
-    var com = PaperGlider.connectParent('http://localhost:9876');
+    var com = PaperGlider.connect().toParent('http://localhost:9876');
     com.replyOn('someaction', a => {
       return {
         text: 'reply',

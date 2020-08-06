@@ -10,10 +10,9 @@ describe('origin is respected', () => {
     const iframeOrigin = 'http://localhost:9877';
     const iframe = window.document.createElement('iframe');
     iframe.src = iframeOrigin + '/tests/cross-origin-content/';
-
-    com = PaperGlider.connectIframe(iframe, iframeOrigin);
-
     window.document.body.append(iframe);
+
+    com = PaperGlider.connect().toWindow(iframe.contentWindow, iframeOrigin);
 
     com.onConnect(() => {
       com.request('someaction', ['value'], res => {
@@ -24,15 +23,14 @@ describe('origin is respected', () => {
     });
   });
 
-  xit('glider does not connect if origin is not right', done => {
+  it('glider does not connect if origin is not right', done => {
     const iframeRealOrigin = 'http://localhost:9877';
     const iframeWrongOrigin = 'http://localhost:9878';
     const iframe = window.document.createElement('iframe');
     iframe.src = iframeRealOrigin + '/tests/cross-origin-content/';
-
-    com = PaperGlider.connectIframe(iframe, iframeWrongOrigin);
-
     window.document.body.append(iframe);
+
+    com = PaperGlider.connect().toWindow(iframe.contentWindow, iframeWrongOrigin);
 
     let called = false;
     com.onConnect(() => {

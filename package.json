@@ -19,7 +19,7 @@
     "karma": "karma start --single-run",
     "karma:debug": "karma start --no-single-run",
     "server2": "http-server ./ -p 9877",
-    "doc": "jsdoc2md index.js"
+    "doc": "jsdoc2md index.js > APIDOC.md"
   },
   "author": {
     "name": "Simon Seyock",

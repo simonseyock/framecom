@@ -11,7 +11,7 @@
     const button = document.getElementById('window');
     button.addEventListener('click', () => {
       const child = window.open('child.html');
-      const paperGlider = PaperGlider.connectChild(child);
+      const paperGlider = PaperGlider.connect().toWindow(child);
       paperGlider.replyOn('life', number => number === 42);
     })
 

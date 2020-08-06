@@ -4,11 +4,10 @@ describe('works with window open', () => {
 
   beforeEach(() => {
     window.document.body.innerHTML = '';
-    const child = window.open('', 'child')
+    const child = window.open('', 'child');
 
-    parentGlider = PaperGlider.connectChild(child);
-    childGlider = new PaperGlider(child);
-    childGlider.init(child.opener);
+    parentGlider = PaperGlider.connect().toWindow(child);
+    childGlider = PaperGlider.connect(child).toParent();
   });
 
   afterEach(() => {
