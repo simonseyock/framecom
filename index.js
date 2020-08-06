@@ -19,8 +19,6 @@
    * @exports {PaperGlider}
    */
   function () {
-    var _context = this;
-
     /**
      * Creates an object to communicate with another windows.
      * @param {Window} self
@@ -183,7 +181,7 @@
      * @constructor
      */
     function PaperGliderConnector(self) {
-      this._self = self || _context;
+      this._self = self || window;
     }
 
     /**
